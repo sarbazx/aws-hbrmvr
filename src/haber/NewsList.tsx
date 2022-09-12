@@ -1,12 +1,21 @@
-import { Container } from '@mantine/core';
+import { Link } from '@tanstack/react-location';
 import NewsListItem from './NewsListItem';
+
 const NewsList = ({ news }: any) => {
   return (
-    <Container size='lg' px='md'>
+    <>
       {news.map((item: any) => (
-        <NewsListItem key={item.id} news={item} />
+        <Link
+          key={item.id}
+          to={item.id}
+          style={{
+            fontWeight: 'bold',
+            textDecoration: 'none',
+          }}>
+          <NewsListItem title={item.title} />
+        </Link>
       ))}
-    </Container>
+    </>
   );
 };
 

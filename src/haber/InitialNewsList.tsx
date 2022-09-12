@@ -1,16 +1,19 @@
-import { Container, Skeleton } from '@mantine/core';
+import { Skeleton } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
-import { useQuery } from '@tanstack/react-query';
-import { fetchInitialNews } from '../api/api';
+import { useMatch } from '@tanstack/react-location';
 import NewsList from './NewsList';
 
 function InitialNewsList() {
-  const { isLoading, data } = useQuery(['initialNews'], fetchInitialNews);
+  const {
+    data: { news },
+    isLoading,
+  } = useMatch();
   const { height } = useViewportSize();
   const values = [...Array(20).keys()];
+
   if (isLoading) {
     return (
-      <Container>
+      <>
         {values.map((val) => (
           <Skeleton
             key={val}
@@ -20,10 +23,11 @@ function InitialNewsList() {
             radius='xl'
           />
         ))}
-      </Container>
+      </>
     );
   }
-  return <NewsList news={data} />;
+
+  return <NewsList news={news} />;
 }
 
 export default InitialNewsList;
